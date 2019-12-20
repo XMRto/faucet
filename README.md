@@ -10,7 +10,7 @@ Visit us at https://community.xmr.to.
 
 ## Getting Started
 
-These instructions will get you a copy of the faucet up and running on your local machine for development and testing purposes. 
+These instructions will get you a copy of the faucet up and running on your local machine for development and testing purposes.
 
 See deployment for notes on how to deploy the project on a live system.
 
@@ -87,14 +87,14 @@ Modify `monero-rpc` service in `docker-compose.yml`.
   - verbosity level of `monero-wallet-rpc` log messages
 * **stagenet**
   - `--stagenet`
-  - `--wallet-file <stagenet_wallet>` 
+  - `--wallet-file <stagenet_wallet>`
   - `--password-file <stagenet_wallet_password_file>`
   - Adapt the path to your monero **stagenet** wallet `<stagenet_wallet>`.
   - `DAEMON_PORT=38081` (or whatever port your daemon is listening to)
   - `wallet_port=38083` (or whatever port yout RPC should be listening on)
 * **testnet**
   - `--testnet`
-  - `--wallet-file <testnet_wallet>` 
+  - `--wallet-file <testnet_wallet>`
   - `--password-file <testnet_wallet_password_file>`
   - Adapt the path to your monero **testnet** wallet `<testnet_wallet>`.
   - `DAEMON_PORT=28081` (or whatever port your daemon is listening to)
@@ -149,7 +149,7 @@ Using the setting `DATABASE_URL` the database can be easily changed.
   - comment `sqlite` in `depends_on` (in `docker-compose.yml`)
   - comment `sqlite` `DATABASE_URL`
   - uncomment `postgres` `DATABASE_URL`
-  - uncomment `postgres` in `depends_on` (in `docker-compose.yml`)  
+  - uncomment `postgres` in `depends_on` (in `docker-compose.yml`)
   - uncomment the `postgres` service (in `docker-compose.yml`)
   - uncomment the `volumes` (in `docker-compose.yml`)
 
@@ -183,7 +183,7 @@ The source code is formatted using `black --line-length 79`.
 
 ## Deployment
 
-For the deployment we recommend using `alpine` as docker base image. 
+For the deployment we recommend using `alpine` as docker base image.
 `prod.Dockerfile` makes use of this - Locally such an environment can be started with `docker-compose-prod.yml` as docker-compose configuration file.
 
 ```bash
@@ -285,7 +285,7 @@ Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c6
 
 ## Versioning
 
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/xmrto/faucet/tags). 
+We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/xmrto/faucet/tags).
 
 ## Authors
 

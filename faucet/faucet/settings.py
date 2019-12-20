@@ -25,7 +25,7 @@ env = environ.Env(
     WALLET_HOST=(str, "localhost"),
     WALLET_PORT=(int, 38083),
     ONCE_EVERY_N_MINUTE=(int, 5),
-    MONERO_ENDPOINT=(str, "/"),
+    MONERO_ENDPOINT=(str, "./"),
     DEFAULT_MIXIN=(str, "10"),
     DAEMON_HOST=(str, "localhost"),
     DAEMON_PORT=(int, 38081),
@@ -39,7 +39,7 @@ MAXIMUM_PAYOUT = env("MAXIMUM_PAYOUT")
 DEFAULT_MIXIN = env("DEFAULT_MIXIN")
 MONERO_ENDPOINT = env("MONERO_ENDPOINT")
 if not MONERO_ENDPOINT:
-    MONERO_ENDPOINT = "/"
+    MONERO_ENDPOINT = "./"
 FACTOR_BALANCE = env("FACTOR_BALANCE")
 PROTOCOL = env("PROTOCOL")
 WALLET_HOST = env("WALLET_HOST")

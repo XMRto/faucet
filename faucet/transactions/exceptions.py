@@ -23,9 +23,19 @@ class GetWalletError(TransactionError):
     """
 
 
+class GetWalletRPCError(APIException):
+    status_code = 500
+    default_detail = "RPC Error on getting wallet."
+
+
 class GetBalanceError(APIException):
     status_code = 500
     default_detail = "RPC Error on getting balance."
+
+
+class GetWalletAddressError(APIException):
+    status_code = 500
+    default_detail = "RPC Error on getting wallet address."
 
 
 class GetAmountError(APIException):

@@ -1,6 +1,7 @@
 from rest_framework.response import Response
 from rest_framework.renderers import JSONRenderer
 from rest_framework.generics import CreateAPIView
+from django.http import JsonResponse
 
 from ratelimit.mixins import RatelimitMixin
 
@@ -9,7 +10,12 @@ from django.shortcuts import render
 
 from .utils import tools
 from .serializers import TransactionSerializer
-from .exceptions import MakeTransactionError, RatelimitedByWithdrawalsError
+from .exceptions import (
+    MakeTransactionError,
+    RatelimitedByWithdrawalsError,
+    RpcConnectionError,
+    GetWalletRPCError,
+)
 
 import logging
 
@@ -26,24 +32,31 @@ def index(request):
     Configure text with monero network mode.
     Configure transaction endpoint with MONERO_ENDPOINT.
     """
+    try:
+        logger.info("Get network mode.")
+        network_type = WalletRPC.get_network_type()
+        network_type_other = ""
+        if network_type == "stagenet":
+            network_type_other = "testnet"
+        elif network_type == "testnet":
+            network_type_other = "stagenet"
+        logger.info("Get wallet address.")
+        wallet_address = WalletRPC.get_address()
 
-    network_type = WalletRPC.get_network_type()
-    network_type_other = ""
-    if network_type == "stagenet":
-        network_type_other = "testnet"
-    elif network_type == "testnet":
-        network_type_other = "stagenet"
+        logger.info("Done getting RPC info.")
 
-    return render(
-        request,
-        "transactions/index.html",
-        {
-            "wallet_address": WalletRPC.get_address(),
-            "monero_network": network_type,
-            "monero_network_other": network_type_other,
-            "endpoint": settings.MONERO_ENDPOINT,
-        },
-    )
+        return render(
+            request,
+            "transactions/index.html",
+            {
+                "wallet_address": wallet_address,
+                "monero_network": network_type,
+                "monero_network_other": network_type_other,
+                "endpoint": settings.MONERO_ENDPOINT,
+            },
+        )
+    except (RpcConnectionError) as e:
+        return JsonResponse({"error": "Internal Server Error."}, status=500)
 
 
 def get_client_ip(request):

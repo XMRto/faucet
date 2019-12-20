@@ -4,16 +4,18 @@ url = "https://pypi.org/simple"
 name = "pypi"
 
 [packages]
-django = "==2.1.7"
-djangorestframework = "==3.8.2"
-"psycopg2-binary" = "==2.7.5"
-requests = "==2.20.0"
-uWSGI = "==2.0.17.1"
+django = "==2.2.9"
+djangorestframework = "==3.11.0"
+"psycopg2-binary" = "==2.8.4"
+requests = "==2.22.0"
+uWSGI = "==2.0.18"
 django-ratelimit = "==2.0.0"
 django-environ = "==0.4.5"
-python-monerorpc = "==0.5.5"
+python-monerorpc = "==0.5.8"
+monero-python = "==0.5.4"
+gevent = "==1.4.0"
 
 [requires]
-python_version = "3.6"
+python_version = "3.7"
 
 [dev-packages]

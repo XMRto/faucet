@@ -9,6 +9,9 @@ from django.conf import settings
 from django.db.models import Count
 from ..models import Transaction
 
+from monero.address import address as moneroaddress
+from monero.address import SubAddress, Address
+
 logging.basicConfig()
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
@@ -86,3 +89,21 @@ def addr_withdrew_too_often(destination_address, rate_allowed, days):
     ]
 
     return destination_address in suspicious_addresses
+
+
+def is_monero_sub_or_address(monero_address):
+    try:
+        address = moneroaddress(monero_address)
+        if not (
+            (isinstance(address, SubAddress)) or (isinstance(address, Address))
+        ):
+            logger.debug(
+                "Address is no Monero subaddress or address: '{monero_address}'"
+            )
+            return False
+        return True
+    except (ValueError) as e:
+        logger.info(
+            f"Could not create valid Monero address from '{monero_address}': 'str(e)'"
+        )
+        return False

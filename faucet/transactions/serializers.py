@@ -15,6 +15,7 @@ from .exceptions import (
 
 from .utils.wallet_rpc import WalletRPC, get_current_amount
 from .utils import tools
+from .utils.tools import is_monero_sub_or_address
 
 
 logger = logging.getLogger(__name__)
@@ -28,10 +29,8 @@ def wallet_address_validator(address):
     :returns: the address if valid
     :raises serializers.ValidationError: if the address should not be valid
     """
-
-    address_length = len(address)
-    if 95 != address_length and 106 != address_length:
-        raise serializers.ValidationError("Address too short/long.")
+    if not is_monero_sub_or_address(address):
+        raise serializers.ValidationError("Not a Monero address.")
     return address
 
 

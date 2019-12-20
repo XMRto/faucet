@@ -45,9 +45,10 @@ services:
       # default is / (development)
       # set to something else when used with proxy in prodcution
       # ---
+      # Default MONERO_ENDPOINT = "./"
       # REMEMBER the trailing '/'
       # - MONERO_ENDPOINT=/
-      - MONERO_ENDPOINT=/faucet/stagenet/
+      # - MONERO_ENDPOINT=/faucet/stagenet/
       - DEFAULT_MIXIN=10
       # '$' now is a special character and needs to be escaped using `$$`
       # may not start with '$' (also not '$$')

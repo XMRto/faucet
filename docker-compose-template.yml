@@ -46,8 +46,8 @@ services:
       # default is / (development)
       # set to something else when used with proxy in prodcution
       # ---
+      # Default MONERO_ENDPOINT = "./"
       # REMEMBER the trailing '/'
-      - MONERO_ENDPOINT=/
       # - MONERO_ENDPOINT=/faucet/stagenet/  # like used with nginx location: /faucet/stagenet
       - DEFAULT_MIXIN=10
       - RATELIMIT_ENABLE=True

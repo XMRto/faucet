@@ -1,4 +1,4 @@
-FROM python:3.6-alpine
+FROM python:3.7-alpine3.10
 # set virtual env in project directory
 ENV PIPENV_VENV_IN_PROJECT true
 
@@ -23,6 +23,7 @@ WORKDIR /data
 
 COPY --chown=faucet:faucet ./faucet /data
 RUN chown faucet:faucet /data
+COPY mime.types /etc/
 
 ENV FAUCET_PORT 8000
 EXPOSE $FAUCET_PORT

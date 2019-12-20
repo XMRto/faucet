@@ -1,8 +1,9 @@
 *
 !Dockerfile
 !faucet
-faucet/.local
-faucet/.cache
-faucet/.venv
-faucet/.virtualenvs
+!mime.types
+#faucet/.local
+#faucet/.cache
+#faucet/.venv
+#faucet/.virtualenvs
 *.pyc

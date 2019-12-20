@@ -1,11 +1,16 @@
 from django.conf import settings
 
-import requests
+from requests.exceptions import (
+    ConnectionError as RequestsConnectionError,
+    ReadTimeout,
+    HTTPError,
+)
 import logging
 
 from . import tools
 from ..exceptions import RpcConnectionError, GetBalanceError, GetAmountError
 from monerorpc.authproxy import AuthServiceProxy, JSONRPCException
+
 
 logging.basicConfig()
 logger = logging.getLogger(__name__)
@@ -40,8 +45,9 @@ class WalletRPC:
         try:
             result = rpc_connection.getbalance()
         except (
-            requests.HTTPError,
-            requests.ConnectionError,
+            HTTPError,
+            RequestsConnectionError,
+            ReadTimeout,
             JSONRPCException,
         ) as e:
             logger.error("RPC Error on getting balance" + str(e))
@@ -74,12 +80,12 @@ class WalletRPC:
         try:
             result = rpc_connection.get_address()
         except (
-            requests.HTTPError,
-            requests.ConnectionError,
+            HTTPError,
+            RequestsConnectionError,
+            ReadTimeout,
             JSONRPCException,
         ) as e:
             logger.error("RPC Error on getting address" + str(e))
-            logger.exception(e)
             raise RpcConnectionError(str(e))
         address = result.get("address", None)
         # check address
@@ -105,11 +111,6 @@ class WalletRPC:
         # transfer parameters
         params = {"destinations": recipients, "mixin": settings.DEFAULT_MIXIN}
 
-        if len(destination_address) == 95:
-            # payment id
-            payment_id = tools.generate_xmr_payment_id_long()
-            params.update({"payment_id": payment_id})
-
         # get the wallet's address
         rpc_connection = AuthServiceProxy(
             "http://{0}:{1}/json_rpc".format(
@@ -121,8 +122,9 @@ class WalletRPC:
         try:
             result = rpc_connection.transfer_split(params)
         except (
-            requests.HTTPError,
-            requests.ConnectionError,
+            HTTPError,
+            RequestsConnectionError,
+            ReadTimeout,
             JSONRPCException,
         ) as e:
             logger.error("RPC Error on making transaction" + str(e))
@@ -164,8 +166,9 @@ class WalletRPC:
             try:
                 result = rpc_connection.get_info()
             except (
-                requests.HTTPError,
-                requests.ConnectionError,
+                HTTPError,
+                RequestsConnectionError,
+                ReadTimeout,
                 JSONRPCException,
             ) as e:
                 logger.error("RPC Error on getting address" + str(e))
@@ -180,6 +183,12 @@ class WalletRPC:
 
 
 def get_balance():
+    """Returns the current balance of the Monero wallet.
+
+    :returns: current wallet balance
+    :raises GetBalanceError: no connection could be established
+    :raises ValueError: retrieved data could not be processed
+    """
     try:
         return WalletRPC.get_balance()
     except (ValueError, RpcConnectionError) as e:

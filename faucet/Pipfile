@@ -4,7 +4,7 @@ url = "https://pypi.org/simple"
 name = "pypi"
 
 [packages]
-django = "==2.2.9"
+django = "==2.2.10"
 djangorestframework = "==3.11.0"
 "psycopg2-binary" = "==2.8.4"
 requests = "==2.22.0"
